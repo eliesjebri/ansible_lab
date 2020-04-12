@@ -1,0 +1,47 @@
+version: "2"
+services:
+  master:
+    build: ./ansible_master/
+    image: eliesjebri/ansible_master
+    container_name: master01
+    hostname: master01
+    ports:
+      - "2220:22"
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.10
+  host01:
+    build: ./centos_base/
+    image: ansible_host
+    container_name: host01
+    hostname: host01
+    ports:
+      - "2221:22"
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.11
+  host02:
+    image: ansible_host
+    container_name: host02
+    hostname: host02
+    ports:
+      - "2222:22"
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.12
+  host03:
+    image: ansible_host
+    container_name: host03
+    hostname: host03
+    ports:
+      - "2223:22"
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.13
+networks:
+    vpcbr:
+        driver: bridge
+        ipam:
+          config:
+            - subnet: 10.5.0.0/16
+              gateway: 10.5.0.1

@@ -1,0 +1,49 @@
+version: "2"
+services:
+  master:
+    build: ./ansible_master/
+    image: eliesjebri/ansible_master
+    container_name: master01
+    hostname: master01
+    ports:
+      - "22"
+#    network_mode: "bridge"
+    networks:
+      ansible_net2: {}
+#        ipv4_address: 10.0.51.100
+    command: ["/usr/sbin/sshd","-D"]
+  host01:
+    build: ./centos_base/
+    image: ansible_host
+    container_name: host01
+    hostname: host01
+    ports:
+      - "22"
+    command: ["/usr/sbin/sshd","-D"]
+  host02:
+    image: ansible_host
+    container_name: host02
+    hostname: host02
+    ports:
+      - "22"
+    command: ["/usr/sbin/sshd","-D"]
+  host03:
+    image: ansible_host
+    container_name: host03
+    hostname: host03
+    ports:
+      - "22"
+    command: ["/usr/sbin/sshd","-D"]
+networks:
+  ansible_net2:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.51.0/24
+          gateway: 10.0.51.254
+          ip_range: 10.0.51.0/28
+          aux_addresses:
+            master01: 10.0.51.2
+            host01: 10.0.51.3
+            host02: 10.0.51.4
+            host03: 10.0.51.5
