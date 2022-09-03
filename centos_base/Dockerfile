@@ -13,7 +13,8 @@ RUN yum install epel-release -y \
   &&  echo 'root:password' | chpasswd \
   &&  mkdir /run/sshd \
   &&  ssh-keygen -A \
-  &&  systemctl enable sshd.service --now
+  &&  systemctl enable sshd.service \
+  &&  systemctl start sshd.service
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
