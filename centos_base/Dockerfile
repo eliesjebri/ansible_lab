@@ -12,7 +12,8 @@ RUN yum install epel-release -y \
   &&  sed -i 's/#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config \
   &&  echo 'root:password' | chpasswd \
   &&  mkdir /run/sshd \
-  &&  ssh-keygen -A
+  &&  ssh-keygen -A \
+  &&  systemctl enable sshd.service --now
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
