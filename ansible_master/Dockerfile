@@ -10,7 +10,7 @@ RUN yum install epel-release -y \
   &&  yum install -y openssh-clients \
   &&  yum install ansible -y \
   &&  yum clean all \
-  &&  sed -i 's/#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config \
+  &&  echo "PermitRootLogin yes" >> /etc/ssh/sshd_config \
   &&  echo 'root:password' | chpasswd \
   &&  mkdir /run/sshd \
   &&  ssh-keygen -A
